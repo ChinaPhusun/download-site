@@ -109,9 +109,7 @@
             flex: 1;
         }
         
-        .separator {
-            color: #999;
-        }
+        /* 分隔符样式已移除 */
         
         .header-row {
             background-color: #f8f9fa;
@@ -248,11 +246,8 @@
                             <div class="software-index"></div>
                             <div class="header-info">
                                 <div class="header-title">软件标题</div>
-                                <div class="separator">|</div>
                                 <div class="header-version">版本</div>
-                                <div class="separator">|</div>
                                 <div class="header-size">大小</div>
-                                <div class="separator">|</div>
                                 <div>下载</div>
                             </div>
                         </div>
@@ -274,11 +269,8 @@
                             <div class="software-index">${index + 1}.</div>
                             <div class="software-info">
                                 <div class="software-title">${soft.name}</div>
-                                <div class="separator">|</div>
                                 <div class="software-version">${soft.version}</div>
-                                <div class="separator">|</div>
                                 <div class="software-size">${soft.size}</div>
-                                <div class="separator">|</div>
                                 <a href="${soft.url}" class="download-btn">下载</a>
                             </div>
                         `;
