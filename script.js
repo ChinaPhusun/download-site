@@ -1,9 +1,9 @@
 // 静态分类数据
 const categories = [
-    { id: 1, name: '1. 开发工具1', order: 1 },
-    { id: 2, name: '2. 设计软件2', order: 2 },
-    { id: 3, name: '3. 办公软件3', order: 3 },
-    { id: 4, name: '4. 系统工具4', order: 4 }
+    { id: 1, name: '1. 开发工具', order: 1 },
+    { id: 2, name: '2. 设计软件', order: 2 },
+    { id: 3, name: '3. 办公软件', order: 3 },
+    { id: 4, name: '4. 系统工具', order: 4 }
 ];
 
 // 静态软件数据
