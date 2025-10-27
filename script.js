@@ -1,163 +1,108 @@
-// 分类数据
+// 静态分类数据
 const categories = [
-    {
-        id: 1,
-        name: "系统工具"
-    },
-    {
-        id: 2,
-        name: "开发工具"
-    },
-    {
-        id: 3,
-        name: "办公软件"
-    }
+    { id: 1, name: '1. 开发工具', order: 1 },
+    { id: 2, name: '2. 设计软件', order: 2 },
+    { id: 3, name: '3. 办公软件', order: 3 },
+    { id: 4, name: '4. 系统工具', order: 4 }
 ];
 
-// 软件数据
+// 静态软件数据
 const software = [
-    {
-        id: 1,
-        categoryId: 1,
-        name: "系统优化大师",
-        version: "v5.6.2",
-        size: "12.8MB",
-        url: "files/system_optimizer.zip"
-    },
-    {
-        id: 2,
-        categoryId: 1,
-        name: "驱动管理器",
-        version: "v3.2.1",
-        size: "8.5MB",
-        url: "files/driver_manager.exe"
-    },
-    {
-        id: 3,
-        categoryId: 1,
-        name: "安全卫士",
-        version: "v8.9.5",
-        size: "23.4MB",
-        url: "files/security_guard.msi"
-    },
-    {
-        id: 4,
-        categoryId: 2,
-        name: "代码编辑器",
-        version: "v2.7.3",
-        size: "45.1MB",
-        url: "files/code_editor_setup.exe"
-    },
-    {
-        id: 5,
-        categoryId: 2,
-        name: "数据库管理工具",
-        version: "v4.1.0",
-        size: "36.7MB",
-        url: "files/db_manager.zip"
-    },
-    {
-        id: 6,
-        categoryId: 2,
-        name: "版本控制系统",
-        version: "v2.34.1",
-        size: "28.3MB",
-        url: "files/vcs_client.exe"
-    },
-    {
-        id: 7,
-        categoryId: 3,
-        name: "文档处理套件",
-        version: "v2023.1",
-        size: "89.2MB",
-        url: "files/office_suite_installer.exe"
-    },
-    {
-        id: 8,
-        categoryId: 3,
-        name: "电子表格软件",
-        version: "v7.8.5",
-        size: "67.4MB",
-        url: "files/spreadsheet_app.msi"
-    },
-    {
-        id: 9,
-        categoryId: 3,
-        name: "演示文稿工具",
-        version: "v6.2.3",
-        size: "52.1MB",
-        url: "files/presentation_tool.zip"
-    }
+    { id: 1, name: 'Visual Studio Code', categoryId: 1, version: '1.85.0', size: '150 MB', url: 'files/vscode.zip' },
+    { id: 2, name: 'Git', categoryId: 1, version: '2.43.0', size: '50 MB', url: 'files/git.zip' },
+    { id: 3, name: 'Node.js', categoryId: 1, version: '20.10.0', size: '80 MB', url: 'files/nodejs.zip' },
+    { id: 4, name: 'Figma', categoryId: 2, version: '118.0.0', size: '90 MB', url: 'files/figma.zip' },
+    { id: 5, name: 'Inkscape', categoryId: 2, version: '1.3.2', size: '120 MB', url: 'files/inkscape.zip' },
+    { id: 6, name: 'GIMP', categoryId: 2, version: '2.10.34', size: '140 MB', url: 'files/gimp.zip' },
+    { id: 7, name: 'LibreOffice', categoryId: 3, version: '7.5.8', size: '250 MB', url: 'files/libreoffice.zip' },
+    { id: 8, name: 'WPS Office', categoryId: 3, version: '11.1.0', size: '180 MB', url: 'files/wps.zip' },
+    { id: 9, name: 'OnlyOffice', categoryId: 3, version: '7.4.1', size: '200 MB', url: 'files/onlyoffice.zip' },
+    { id: 10, name: '7-Zip', categoryId: 4, version: '23.01', size: '2 MB', url: 'files/7zip.zip' },
+    { id: 11, name: 'CCleaner', categoryId: 4, version: '6.18', size: '14 MB', url: 'files/ccleaner.zip' },
+    { id: 12, name: 'PotPlayer', categoryId: 4, version: '220818', size: '28 MB', url: 'files/potplayer.zip' }
 ];
 
-// 根据分类ID获取分类下的软件
-function getSoftwareByCategory(categoryId) {
-    return software.filter(item => item.categoryId === categoryId);
-}
-
-// 渲染分类和软件
+// 渲染分类和软件列表
 function renderCategories() {
     const container = document.getElementById('categories-container');
+    container.innerHTML = '';
     
-    categories.forEach(category => {
-        const categoryElement = document.createElement('div');
-        categoryElement.className = 'category';
+    // 按顺序排序分类
+    const sortedCategories = [...categories].sort((a, b) => a.order - b.order);
+    
+    sortedCategories.forEach((category, index) => {
+        // 获取该分类下的软件
+        const categorySoftware = software.filter(soft => soft.categoryId === category.id);
         
-        // 分类标题
-        const header = document.createElement('div');
-        header.className = 'category-header';
-        header.innerHTML = `
-            ${category.name}
-            <span class="toggle-icon">▼</span>
-        `;
+        // 创建分类元素
+        const categoryDiv = document.createElement('div');
+        categoryDiv.className = `category ${index === 0 ? 'expanded' : ''}`; // 默认展开第一个分类
+        categoryDiv.id = `category-${category.id}`;
         
-        // 分类内容
-        const content = document.createElement('div');
-        content.className = 'category-content';
-        
-        // 添加表头
-        const headerRow = document.createElement('div');
-        headerRow.className = 'header-row';
-        headerRow.innerHTML = `
-            <span class="software-index">序号</span>
-            <div class="header-info">
-                <span class="header-title">软件名称</span>
-                <span class="header-version">版本</span>
-                <span class="header-size">大小</span>
+        categoryDiv.innerHTML = `
+            <div class="category-header" onclick="toggleCategory('category-${category.id}')">
+                <span>${category.name}</span>
+                <span class="toggle-icon">▼</span>
             </div>
-            <span>下载</span>
-        `;
-        content.appendChild(headerRow);
-        
-        // 添加软件列表
-        const categorySoftware = getSoftwareByCategory(category.id);
-        categorySoftware.forEach((item, index) => {
-            const softwareItem = document.createElement('div');
-            softwareItem.className = 'software-item';
-            softwareItem.innerHTML = `
-                <span class="software-index">${index + 1}</span>
-                <div class="software-info">
-                    <span class="software-title">${item.name}</span>
-                    <span class="software-version">${item.version}</span>
-                    <span class="software-size">${item.size}</span>
+            <div class="category-content">
+                <div class="header-row">
+                    <div class="software-index"></div>
+                    <div class="header-info">
+                        <div class="header-title">软件标题</div>
+                        <div class="header-version">版本</div>
+                        <div class="header-size">大小</div>
+                        <div>下载</div>
+                    </div>
                 </div>
-                <a href="${item.url}" class="download-btn">下载</a>
-            `;
-            content.appendChild(softwareItem);
-        });
+                <div id="category-${category.id}-software">
+                </div>
+            </div>
+        `;
         
-        // 添加点击事件
-        header.addEventListener('click', () => {
-            categoryElement.classList.toggle('expanded');
-        });
+        container.appendChild(categoryDiv);
         
-        // 组装分类元素
-        categoryElement.appendChild(header);
-        categoryElement.appendChild(content);
+        // 渲染该分类下的软件
+        const softwareContainer = document.getElementById(`category-${category.id}-software`);
         
-        container.appendChild(categoryElement);
+        if (categorySoftware.length > 0) {
+            categorySoftware.forEach((soft, index) => {
+                const item = document.createElement('div');
+                item.className = 'software-item';
+                item.innerHTML = `
+                    <div class="software-index">${index + 1}.</div>
+                    <div class="software-info">
+                        <div class="software-title">${soft.name}</div>
+                        <div class="software-version">${soft.version}</div>
+                        <div class="software-size">${soft.size}</div>
+                        <a href="${soft.url}" class="download-btn">下载</a>
+                    </div>
+                `;
+                softwareContainer.appendChild(item);
+            });
+        } else {
+            const emptyItem = document.createElement('div');
+            emptyItem.style.textAlign = 'center';
+            emptyItem.style.color = '#999';
+            emptyItem.style.padding = '20px';
+            emptyItem.textContent = '该分类下暂无软件';
+            softwareContainer.appendChild(emptyItem);
+        }
     });
 }
 
-// 页面加载完成后渲染
-window.addEventListener('DOMContentLoaded', renderCategories);
+// 切换分类的展开/折叠状态，同时折叠其他分类
+function toggleCategory(categoryId) {
+    // 先折叠所有分类
+    document.querySelectorAll('.category').forEach(cat => {
+        cat.classList.remove('expanded');
+    });
+    
+    // 然后展开当前分类
+    const currentCategory = document.getElementById(categoryId);
+    currentCategory.classList.add('expanded');
+}
+
+// 初始化页面
+document.addEventListener('DOMContentLoaded', function() {
+    renderCategories();
+});
