@@ -1,0 +1,175 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+header {
+    background-color: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
+}
+
+h1 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.category {
+    margin-bottom: 15px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    overflow: hidden;
+}
+
+.category-header {
+    background-color: #3498db;
+    color: white;
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.category-header:hover {
+    background-color: #2980b9;
+}
+
+.category-content {
+    display: none;
+}
+
+.category.expanded .category-content {
+    display: block;
+}
+
+.toggle-icon {
+    transition: transform 0.3s;
+}
+
+.category.expanded .toggle-icon {
+    transform: rotate(180deg);
+}
+
+.software-item {
+    padding: 10px 20px;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.software-item:hover {
+    background-color: #f9f9f9;
+}
+
+.software-index {
+    font-weight: bold;
+    margin-right: 10px;
+    color: #3498db;
+}
+
+.software-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.software-title {
+    font-weight: bold;
+    flex: 2;
+}
+
+.software-version, .software-size {
+    flex: 1;
+}
+
+/* 分隔符样式已移除 */
+
+.header-row {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    border-bottom: 2px solid #ddd;
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex: 1;
+}
+
+.header-title {
+    flex: 2;
+}
+
+.header-version, .header-size {
+    flex: 1;
+}
+
+.download-btn {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.download-btn:hover {
+    background-color: #27ae60;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    color: #666;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .software-item, .header-row {
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+    
+    .software-info, .header-info {
+        gap: 10px;
+    }
+    
+    .download-btn {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
+}
