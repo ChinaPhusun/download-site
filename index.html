@@ -3,255 +3,402 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>简约下载站 - GitHub Pages</title>
+    <title>常用软件下载站</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif;
             line-height: 1.6;
             color: #333;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
             background-color: #f5f5f5;
+            max-width: 100%;
+            overflow-x: hidden;
         }
-        
+
         header {
             background-color: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .site-title {
             text-align: center;
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #1a1a1a;
         }
-        
-        h1 {
-            color: #2c3e50;
-            margin-bottom: 10px;
+
+        .site-description {
+            text-align: center;
+            font-size: 1rem;
+            color: #666;
+            margin-top: 0.5rem;
         }
-        
+
+        main {
+            padding: 2rem 0;
+        }
+
+        .software-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
         .category {
-            margin-bottom: 15px;
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
             overflow: hidden;
+            transition: all 0.3s ease;
         }
-        
+
         .category-header {
-            background-color: #3498db;
-            color: white;
-            padding: 15px 20px;
+            background-color: #f8f9fa;
+            padding: 1rem 1.5rem;
             cursor: pointer;
             display: flex;
-            justify-content: space-between;
             align-items: center;
-            font-weight: bold;
-            transition: background-color 0.3s;
+            justify-content: space-between;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.2s ease;
         }
-        
+
         .category-header:hover {
-            background-color: #2980b9;
+            background-color: #f1f3f5;
         }
-        
+
+        .category-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .category-icon {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .category.expanded .category-icon {
+            transform: rotate(90deg);
+        }
+
         .category-content {
-            display: none;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
         }
-        
+
         .category.expanded .category-content {
-            display: block;
+            max-height: 1000px;
         }
-        
-        .toggle-icon {
-            transition: transform 0.3s;
+
+        .software-list {
+            padding: 1.5rem;
         }
-        
-        .category.expanded .toggle-icon {
-            transform: rotate(180deg);
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        th, td {
-            padding: 12px 20px;
-            text-align: left;
-            border-bottom: 1px solid #ddd;
-        }
-        
-        th {
+
+        .software-item {
             background-color: #f8f9fa;
-            font-weight: bold;
-            color: #555;
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            transition: all 0.2s ease;
         }
-        
-        tr:hover {
-            background-color: #f5f5f5;
+
+        .software-item:last-child {
+            margin-bottom: 0;
         }
-        
-        .download-btn {
-            background-color: #2ecc71;
+
+        .software-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .software-info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .software-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .software-name {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 0.25rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .software-description {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .software-meta {
+            font-size: 0.8rem;
+            color: #888;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .download-button {
+            background-color: #007bff;
             color: white;
             border: none;
-            padding: 6px 12px;
             border-radius: 4px;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            text-decoration: none;
-            font-size: 14px;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s ease;
+            white-space: nowrap;
         }
-        
-        .download-btn:hover {
-            background-color: #27ae60;
+
+        .download-button:hover {
+            background-color: #0056b3;
         }
-        
+
+        .download-button:active {
+            transform: translateY(1px);
+        }
+
         footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #666;
             background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-top: 1px solid #eee;
+            padding: 2rem 0;
+            margin-top: 2rem;
         }
-        
+
+        .footer-content {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .footer-content p {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-content a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-content a:hover {
+            text-decoration: underline;
+        }
+
+        /* 响应式设计 */
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
+            .site-title {
+                font-size: 1.5rem;
             }
-            
-            table {
-                font-size: 14px;
+
+            .category-header {
+                padding: 0.75rem 1rem;
             }
-            
-            th, td {
-                padding: 8px 12px;
+
+            .category-title {
+                font-size: 1.1rem;
             }
-            
-            .download-btn {
-                padding: 4px 8px;
-                font-size: 12px;
+
+            .software-list {
+                padding: 1rem;
             }
+
+            .software-info {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.75rem;
+            }
+
+            .download-button {
+                align-self: flex-end;
+            }
+        }
+
+        /* 加载动画 */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        .loading::after {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-left: 10px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #007bff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
     <header>
-        <h1>简约下载站</h1>
-        <p>点击分类标题可以折叠或展开</p>
+        <div class="container">
+            <h1 class="site-title">常用软件下载站</h1>
+            <p class="site-description">收集各类常用软件，方便快速下载</p>
+        </div>
     </header>
-    
-    <div id="categories-container"></div>
-    
+
+    <main>
+        <div class="container">
+            <div class="software-container" id="software-container">
+                <div class="loading" id="loading">加载中</div>
+            </div>
+        </div>
+    </main>
+
     <footer>
-        <p>© 2024 简约下载站 - 基于GitHub Pages构建</p>
+        <div class="container">
+            <div class="footer-content">
+                <p>© 2023 常用软件下载站</p>
+                <p>本站仅提供下载链接，所有软件的版权归原作者所有</p>
+            </div>
+        </div>
     </footer>
-    
+
     <script>
-        // 静态分类数据
-        const categories = [
-            { id: 1, name: '1. 开发工具', order: 1 },
-            { id: 2, name: '2. 设计软件', order: 2 },
-            { id: 3, name: '3. 办公软件', order: 3 },
-            { id: 4, name: '4. 系统工具', order: 4 }
+        // 默认分类和软件数据
+        const defaultCategories = [
+            { id: 'system', name: '系统工具' },
+            { id: 'browser', name: '浏览器' },
+            { id: 'editor', name: '编辑器' },
+            { id: 'communication', name: '通讯工具' },
+            { id: 'security', name: '安全防护' }
         ];
-        
-        // 静态软件数据
-        const software = [
-            { id: 1, name: 'Visual Studio Code', categoryId: 1, version: '1.85.0', size: '150 MB', url: 'files/vscode.zip' },
-            { id: 2, name: 'Git', categoryId: 1, version: '2.43.0', size: '50 MB', url: 'files/git.zip' },
-            { id: 3, name: 'Node.js', categoryId: 1, version: '20.10.0', size: '80 MB', url: 'files/nodejs.zip' },
-            { id: 4, name: 'Figma', categoryId: 2, version: '118.0.0', size: '90 MB', url: 'files/figma.zip' },
-            { id: 5, name: 'Inkscape', categoryId: 2, version: '1.3.2', size: '120 MB', url: 'files/inkscape.zip' },
-            { id: 6, name: 'GIMP', categoryId: 2, version: '2.10.34', size: '140 MB', url: 'files/gimp.zip' },
-            { id: 7, name: 'LibreOffice', categoryId: 3, version: '7.5.8', size: '250 MB', url: 'files/libreoffice.zip' },
-            { id: 8, name: 'WPS Office', categoryId: 3, version: '11.1.0', size: '180 MB', url: 'files/wps.zip' },
-            { id: 9, name: 'OnlyOffice', categoryId: 3, version: '7.4.1', size: '200 MB', url: 'files/onlyoffice.zip' },
-            { id: 10, name: '7-Zip', categoryId: 4, version: '23.01', size: '2 MB', url: 'files/7zip.zip' },
-            { id: 11, name: 'CCleaner', categoryId: 4, version: '6.18', size: '14 MB', url: 'files/ccleaner.zip' },
-            { id: 12, name: 'PotPlayer', categoryId: 4, version: '220818', size: '28 MB', url: 'files/potplayer.zip' }
+
+        const defaultSoftware = [
+            { id: 1, name: 'Google Chrome', description: '快速、安全的网络浏览器', version: '114.0.5735.198', size: '80.5 MB', downloadUrl: 'https://www.google.com/chrome/', categoryId: 'browser' },
+            { id: 2, name: 'Firefox', description: '自由开源的网络浏览器', version: '114.0', size: '86.2 MB', downloadUrl: 'https://www.mozilla.org/firefox/', categoryId: 'browser' },
+            { id: 3, name: 'Visual Studio Code', description: '轻量级但功能强大的源代码编辑器', version: '1.79.0', size: '120 MB', downloadUrl: 'https://code.visualstudio.com/', categoryId: 'editor' },
+            { id: 4, name: 'Notepad++', description: '免费开源的代码编辑器', version: '8.5.4', size: '4.2 MB', downloadUrl: 'https://notepad-plus-plus.org/', categoryId: 'editor' },
+            { id: 5, name: '微信', description: '常用的即时通讯工具', version: '3.9.5', size: '115 MB', downloadUrl: 'https://weixin.qq.com/', categoryId: 'communication' },
+            { id: 6, name: 'QQ', description: '经典的即时通讯软件', version: '9.7.11', size: '98 MB', downloadUrl: 'https://im.qq.com/', categoryId: 'communication' },
+            { id: 7, name: 'CCleaner', description: '系统优化和隐私保护工具', version: '6.18', size: '15.6 MB', downloadUrl: 'https://www.ccleaner.com/', categoryId: 'system' },
+            { id: 8, name: '7-Zip', description: '开源的压缩文件管理器', version: '23.00', size: '2.1 MB', downloadUrl: 'https://www.7-zip.org/', categoryId: 'system' },
+            { id: 9, name: '360安全卫士', description: '全方位的电脑安全防护软件', version: '13.6.0.2001', size: '68 MB', downloadUrl: 'https://weishi.360.cn/', categoryId: 'security' },
+            { id: 10, name: '腾讯电脑管家', description: '集电脑安全防护与系统优化于一体', version: '15.4.22942.208', size: '58.5 MB', downloadUrl: 'https://guanjia.qq.com/', categoryId: 'security' }
         ];
-        
-        // 渲染分类和软件列表
-        function renderCategories() {
-            const container = document.getElementById('categories-container');
+
+        // 渲染软件分类和列表
+        function renderSoftwareList() {
+            const container = document.getElementById('software-container');
             container.innerHTML = '';
-            
-            // 按顺序排序分类
-            const sortedCategories = [...categories].sort((a, b) => a.order - b.order);
-            
-            sortedCategories.forEach((category, index) => {
-                // 获取该分类下的软件
-                const categorySoftware = software.filter(soft => soft.categoryId === category.id);
-                
-                // 创建分类元素
-                const categoryDiv = document.createElement('div');
-                categoryDiv.className = `category ${index === 0 ? 'expanded' : ''}`; // 默认展开第一个分类
-                categoryDiv.id = `category-${category.id}`;
-                
-                categoryDiv.innerHTML = `
-                    <div class="category-header" onclick="toggleCategory('category-${category.id}')">
-                        <span>${category.name}</span>
-                        <span class="toggle-icon">▼</span>
-                    </div>
-                    <div class="category-content">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>软件标题</th>
-                                    <th>版本</th>
-                                    <th>大小</th>
-                                    <th>下载</th>
-                                </tr>
-                            </thead>
-                            <tbody id="category-${category.id}-software">
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-                
-                container.appendChild(categoryDiv);
-                
-                // 渲染该分类下的软件
-                const softwareContainer = document.getElementById(`category-${category.id}-software`);
-                
-                if (categorySoftware.length > 0) {
-                    categorySoftware.forEach(soft => {
-                        const row = document.createElement('tr');
-                        row.innerHTML = `
-                            <td>${soft.name}</td>
-                            <td>${soft.version}</td>
-                            <td>${soft.size}</td>
-                            <td><a href="${soft.url}" class="download-btn">下载</a></td>
-                        `;
-                        softwareContainer.appendChild(row);
-                    });
-                } else {
-                    const emptyRow = document.createElement('tr');
-                    emptyRow.innerHTML = `
-                        <td colspan="4" style="text-align: center; color: #999; padding: 20px;">该分类下暂无软件</td>
-                    `;
-                    softwareContainer.appendChild(emptyRow);
+
+            // 按分类组织软件
+            const softwareByCategory = defaultSoftware.reduce((acc, software) => {
+                if (!acc[software.categoryId]) {
+                    acc[software.categoryId] = [];
                 }
+                acc[software.categoryId].push(software);
+                return acc;
+            }, {});
+
+            // 渲染每个分类
+            defaultCategories.forEach(category => {
+                const categoryElement = document.createElement('div');
+                categoryElement.className = 'category';
+                categoryElement.id = category.id;
+
+                // 分类头部
+                const header = document.createElement('div');
+                header.className = 'category-header';
+                header.innerHTML = `
+                    <h3 class="category-title">
+                        <span class="category-icon">▶</span>
+                        ${category.name}
+                    </h3>
+                `;
+                header.addEventListener('click', () => toggleCategory(category.id));
+
+                // 分类内容
+                const content = document.createElement('div');
+                content.className = 'category-content';
+                
+                const softwareList = document.createElement('div');
+                softwareList.className = 'software-list';
+
+                // 添加该分类下的软件
+                const categorySoftware = softwareByCategory[category.id] || [];
+                categorySoftware.forEach(software => {
+                    const softwareItem = document.createElement('div');
+                    softwareItem.className = 'software-item';
+                    softwareItem.innerHTML = `
+                        <div class="software-info">
+                            <div class="software-details">
+                                <h4 class="software-name">${software.name}</h4>
+                                <p class="software-description">${software.description}</p>
+                                <div class="software-meta">
+                                    <span>版本：${software.version}</span>
+                                    <span>大小：${software.size}</span>
+                                </div>
+                            </div>
+                            <a href="${software.downloadUrl}" target="_blank" class="download-button">立即下载</a>
+                        </div>
+                    `;
+                    softwareList.appendChild(softwareItem);
+                });
+
+                content.appendChild(softwareList);
+                categoryElement.appendChild(header);
+                categoryElement.appendChild(content);
+                container.appendChild(categoryElement);
             });
         }
-        
-        // 切换分类的展开/折叠状态
+
+        // 切换分类的展开/折叠状态，同时折叠其他分类
         function toggleCategory(categoryId) {
-            const category = document.getElementById(categoryId);
-            category.classList.toggle('expanded');
+            // 先折叠所有分类
+            document.querySelectorAll('.category').forEach(cat => {
+                if (cat.id !== categoryId) {
+                    cat.classList.remove('expanded');
+                }
+            });
+            
+            // 然后切换当前分类的状态
+            const currentCategory = document.getElementById(categoryId);
+            currentCategory.classList.toggle('expanded');
         }
-        
-        // 初始化页面
-        document.addEventListener('DOMContentLoaded', function() {
-            renderCategories();
+
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', () => {
+            renderSoftwareList();
         });
     </script>
 </body>
